@@ -1,5 +1,3 @@
-Kreiranje upita koji prikazuje sve narudžbe zaposlenika je jednostavan zadatak korištenjem naredbe
-JOIN.
 -- Pronađite EmployeeID i OrderID za sve narudžbe
 SELECT EmployeeID, OrderID
 FROM Orders;
@@ -155,8 +153,6 @@ GROUP BY City;
 /* Broj zaposlenika po gradovima za one gradove koji imaju barem dva
 zaposlenika */
 SELECT City, COUNT(EmployeeID) AS NumEmployees
-STRUČNI STUDIJ INFORMACIJSKE TEHNOLOGIJE BAZE PODATAKA 2
-9
 FROM Employees
 GROUP BY City
 HAVING COUNT(EmployeeID) > 1;
@@ -170,12 +166,12 @@ GROUP BY City
 HAVING COUNT(EmployeeID) > 1
 ORDER BY NumEmployees;
 
-PROVJERA JEDNAKOSTI
+--PROVJERA JEDNAKOSTI
 SELECT Title, FirstName, LastName
 FROM Employees
 WHERE Title = 'Sales Representative';
 
-PROVJERA NEJEDNAKOSTI
+--PROVJERA NEJEDNAKOSTI
 SELECT FirstName, LastName
 FROM Employees
 WHERE Title <> 'Sales Representative';
@@ -184,34 +180,27 @@ SELECT FirstName, LastName
 FROM Employees
 WHERE LastName >= 'N';
 
-PROVJERA NULL VRIJEDNOSTI
-Kada atribut nema vrijednosti, kažemo da mu je vrijednost NULL. NULL vrijednost nije isto što i
-prazan string, već znači da polje u zapisu ne sadrži nikakvu vrijednost. Kod provjere NULL vrijednosti
-ne može se koristiti operator jednakosti, već izraz IS NULL, odnosno IS NOT NULL.
+--PROVJERA NULL VRIJEDNOSTI
 SELECT FirstName, LastName
 FROM Employees
 WHERE Region IS NOT NULL;
 
 
-OPERATOR BETWEEN
-Operator BETWEEN se koristi kod provjere jesu li vrijednosti polja unutar zadanog inkluzivnog
-raspona.
+--OPERATOR BETWEEN
 SELECT FirstName, LastName
 FROM Employees
 WHERE LastName BETWEEN 'J' AND 'M';
--- Gornja naredba je ista kao i donja
+
 SELECT FirstName, LastName
 FROM Employees
 WHERE LastName >= 'J' AND LastName <= 'M';
 
 
-OPERATOR IN
-Operator IN operator se koristi kod provjere nalaze li se vrijednosti polja unutar zadane liste
-vrijednosti odvojenih zarezom.
+--OPERATOR IN
 SELECT TitleOfCourtesy, FirstName, LastName
 FROM Employees
 WHERE TitleOfCourtesy IN ('Ms.','Mrs.');
--- Gornja naredba je ista kao i donja
+
 SELECT TitleOfCourtesy, FirstName, LastName
 FROM Employees
 WHERE TitleOfCourtesy = 'Ms.' OR TitleOfCourtesy = 'Mrs.';
@@ -220,23 +209,18 @@ SELECT TitleOfCourtesy, FirstName, LastName
 FROM Employees
 WHERE TitleOfCourtesy LIKE 'M%';
 
-OPERATOR NOT
-Operator NOT se koristi za negaciju operacije.
+--OPERATOR NOT
 SELECT TitleOfCourtesy, FirstName, LastName
 FROM Employees
 WHERE NOT TitleOfCourtesy IN ('Ms.','Mrs.');
 
-AND
-Operator AND može se koristiti u WHERE izrazu za pronalaženje zapise koji zadovoljavaju više od
-jednog uvjeta.
+--AND
 SELECT FirstName, LastName
 FROM Employees
 WHERE Title = 'Sales Representative'
 AND TitleOfCourtesy = 'Mr.';
 
-OR
-Operator OR može se koristiti u WHERE izrazu za pronalaženje zapisa zapisa koji zadovoljavaju barem
-jedan od nekoliko uvjeta.
+--OR
 SELECT FirstName, LastName, City
 FROM Employees
 WHERE City = 'Seattle' OR City = 'Redmond';
@@ -317,7 +301,6 @@ FROM Customers c INNER JOIN Orders o
 ON c.CustomerID = o.CustomerID
 WHERE OrderID = 10290
 
-PODUPIT LISTA
 -- Pronađite nazive tvrtki koja su ostvarile narudžbu 1997 g.
 SELECT CustomerID, CompanyName
 FROM Customers
@@ -347,8 +330,6 @@ Northwind.dbo.Orders)) Day_Diff
  WHERE ShipCity = 'Paris'
  ORDER BY OrderDate DESC
 
-PODUPITI U FROM IZRAZU
-
 /*
 Ispišite narudžbe i datume narudžbi svih zaposlenika iz Londona ugnjezdeni join podupit
 */
@@ -369,12 +350,6 @@ WHERE CustomerID = (SELECT CustomerID
  FROM Orders
  WHERE OrderId = 10248)
 
-
-
-KORELIRANI PODUPITI
-Korelirani upit je podupit koji koristi vrijednosti iz vanjskog (glavnog) upita u svom WHERE izrazu.
-Kod koreliranih podupita izvršavanje podupita ovisi o glavnom upitu, tj. podupit se izvršava za svaki
-pojedinačni rezultat glavnog upita.
 /*
 Ispišite listu narudžbi kod kojih kupac nije kupio više od 10% prosjeène
 količine prodaje za odreðeni proizvod,
@@ -393,7 +368,6 @@ FROM Orders o
 WHERE 20 < (SELECT Quantity
  FROM [Order Details] od
  WHERE o.OrderID = od.OrderID AND od.ProductID = 23)
-
 
 /* Ovaj primjer koristi korelirani podupit s EXISTS ključnom riječi za
 dohvaćanje liste zaposlenika koji su zaprimili narudžbe 9/2/97 */
@@ -433,7 +407,6 @@ CustomerID
  ,ShipCountry
 FROM Orders
 WHERE ORDERID = 10248
-
 
 -- Ažurirajte zaposlenike čije je ime Nat na način da ime postane Nathaniel
 UPDATE Employees
@@ -546,8 +519,7 @@ SELECT *
 FROM Employees
 
 
-KORISNIČKE FUNKCIJE; POHRANJENE PROCEDURE
-Kreirajte sljedeće korisničke funkcije, te SELECT izraz koji ih poziva.
+/*Kreirajte sljedeće korisničke funkcije, te SELECT izraz koji ih poziva.
 1. Funkciju fnIznosStavke koja računa iznos stavke narudžbe.
 Ispišite sve stavke narudžbi te ukupan iznos svake od njih korištenjem prethodno definirane
 funkcije.
@@ -566,7 +538,7 @@ Procedura prima 4 parametra
  @endOrderDate
  @firstName
  @lastName
-5. Napišite SQL izraze koji brišu prethodno kreirane pohranjene procedure
+5. Napišite SQL izraze koji brišu prethodno kreirane pohranjene procedure*/
 
 
 ----1.1
@@ -644,12 +616,6 @@ Procedura prima 4 parametra
 --DROP PROCEDURE spSelectProduct
 --DROP PROCEDURE spSelectAllProduc
 
-SKALARNA FUNKCIJE
-Skalarne korisničke funkcije vraćaju jednu vrijednost skalarnog podatkovnog tipa poput integer,
-varchar(n), char(n), money, datetime, bit itd. Skalarne korisničke funkcije mogu također vraćati
-korisnički definirane podatkovne tipove ukoliko su oni bazirani na skalarnom podatkovnom tipu.
-Međutim, skalarne funkcije ne mogu vratiti sve tipove podataka, npr.: text, ntext, image, cursor, ili
-timestamp.
 /* Kreirai korisničku funkciju koja odreðuje je li potrebno ponovno
 naručiti proizvod. */
 CREATE FUNCTION fnNeedToReorder (@nReorderLevel INT, @nUnitsInStock INT,
@@ -731,12 +697,10 @@ BEGIN
 END
 
 
-Korisnička funkcija se briše izrazom DROP FUNCTION:
+
 DROP FUNCTION fnNeedToReorder
 
---procedura koja inserta dodaje novog employeea
-Ukoliko je postojeću pohranjenu procedure potrebno izmijeniti, jednostavno zamjenjujemo ključnu
-riječ CREATE sa ključnom riječju ALTER .
+
 ALTER PROCEDURE InsertEmployee
 (@fname NVARCHAR(10), @lname NVARCHAR(20),@title NVARCHAR(30),@country
 NVARCHAR(15))
@@ -745,17 +709,6 @@ INSERT INTO Employees (FirstName, LastName, Title, COUNTRY)
 VALUES (@fname, @lname, @title, @country)
 RETURN @@IDENTITY
 
-Pohranjena procedura se pokreće korištenjem EXECUTE or EXEC ključne riječi.
-EXEC NazivProcedure
-Ukoliko pohranjena procedura ima razmak u nazivu, naziv zatvaramo u navodnike.
-EXEC "Naziv Procedure"
-Ako pohranjena procedura prima parametre, njihove vrijednosti navodimo nakon naziva procedure:
-EXEC InsertEmployee @fname='Ann', @lname='Scott', @title='Sales manager'
-ILI
-EXEC InsertEmployee 'Ann', 'Scott', 'Sales manager'
-
-Pohranjena procedura briše se izrazom DROP PROCEDURE:
-DROP PROCEDURE InsertEmployee
 
 --- u tablicu Region dodati zapis u kojem æe polje RegionDescription imati vrijednost “ISEA”
 --INSERT INTO dbo.Region (RegionID,RegionDescription)
@@ -901,7 +854,7 @@ SELECT * FROM fn_TimesSold(5);
 
 
 
-Query that displays the Id of each order (OrderID) on which the ProductID = 23 was sold, the quantity by which that product was sold on the item, and the maximum quantity by which any product was sold.
+--Query that displays the Id of each order (OrderID) on which the ProductID = 23 was sold, the quantity by which that product was sold on the item, and the maximum quantity by which any product was sold.
 
 
 SELECT OrderID, Quantity,
@@ -984,7 +937,7 @@ WHERE CustomerID NOT IN (SELECT CustomerID
  WHERE OrderDate BETWEEN '1997-01-0
 
 
-function takes a ProductID as input and returns the UnitPrice of that product
+--function takes a ProductID as input and returns the UnitPrice of that product
 CREATE FUNCTION dbo.fn_GetProductPrice(@ProductId INT)
 RETURNS MONEY
 AS
